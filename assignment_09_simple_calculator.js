@@ -75,3 +75,95 @@
 // =============================================================================
 
 
+const prompt = require("prompt-sync")();
+
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  if (b === 0) {
+    return null;
+  }
+  return Math.round((a / b) * 100) / 100;
+}
+
+function modulus(a, b) {
+  if (b === 0) {
+    return null;
+  }
+  return a % b;
+}
+
+function exponent(a, b) {
+  return a ** b;
+}
+
+function showMenu() {
+  console.log("=".repeat(30));
+  console.log("      SIMPLE CALCULATOR");
+  console.log("=".repeat(30));
+  console.log("1. Addition");
+  console.log("2. Subtraction");
+  console.log("3. Multiplication");
+  console.log("4. Division");
+  console.log("5. Modulus");
+  console.log("6. Exponentiation");
+  console.log("7. Quit");
+}
+
+function getNumbers() {
+  const a = parseFloat(prompt("Enter first number : "));
+  const b = parseFloat(prompt("Enter second number: "));
+  return [a, b];
+}
+
+function main() {
+  const operations = {
+    1: ["+", add],
+    2: ["-", subtract],
+    3: ["*", multiply],
+    4: ["/", divide],
+    5: ["%", modulus],
+    6: ["**", exponent],
+  };
+
+  while (true) {
+    showMenu();
+    const choice = prompt("Select an operation (1-7): ");
+
+    if (choice === "7") {
+      console.log("Goodbye!");
+      break;
+    }
+
+    if (!operations[choice]) {
+      console.log("Error: Please enter a number between 1 and 7.");
+      console.log();
+      continue;
+    }
+
+    const [symbol, operation] = operations[choice];
+    const [a, b] = getNumbers();
+
+    if ((choice === "4" || choice === "5") && b === 0) {
+      console.log("Error: Cannot divide by zero.");
+      console.log();
+      continue;
+    }
+
+    const result = operation(a, b);
+    console.log(`Result: ${a} ${symbol} ${b} = ${result}`);
+    console.log();
+  }
+}
+
+main();

@@ -43,3 +43,30 @@
 // =============================================================================
 
 
+const prompt = require("prompt-sync")();
+
+function primalityChecker(number) {
+  if (number < 2) {
+    return false;
+  }
+
+  if (number === 2) {
+    return true;
+  }
+
+  for (let i = 2; i < number; i++) {
+    if (number % i === 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+const number = parseInt(prompt("Enter a number: "));
+
+if (primalityChecker(number)) {
+  console.log(`${number} is a prime number.`);
+} else {
+  console.log(`${number} is NOT a prime number.`);
+}

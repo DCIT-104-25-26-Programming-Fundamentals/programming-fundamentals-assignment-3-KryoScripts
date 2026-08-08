@@ -44,3 +44,65 @@
 // =============================================================================
 
 
+const prompt = require("prompt-sync")();
+
+function calculateSum(numbers) {
+  let total = 0;
+  for (const num of numbers) {
+    total += num;
+  }
+  return total;
+}
+
+function calculateAverage(numbers) {
+  const total = calculateSum(numbers);
+  return total / numbers.length;
+}
+
+function calculateMax(numbers) {
+  let highest = numbers[0];
+  for (const num of numbers) {
+    if (num > highest) {
+      highest = num;
+    }
+  }
+  return highest;
+}
+
+function calculateMin(numbers) {
+  let lowest = numbers[0];
+  for (const num of numbers) {
+    if (num < lowest) {
+      lowest = num;
+    }
+  }
+  return lowest;
+}
+
+function statSummary() {
+  const n = parseInt(prompt("How many numbers? "));
+
+  if (n <= 0) {
+    console.log("Error: N must be a positive integer.");
+    return;
+  }
+
+  const numbers = [];
+  for (let i = 0; i < n; i++) {
+    const num = parseInt(prompt(`Enter number ${i + 1}: `));
+    numbers.push(num);
+  }
+
+  const total = calculateSum(numbers);
+  const average = calculateAverage(numbers);
+  const highest = calculateMax(numbers);
+  const lowest = calculateMin(numbers);
+
+  console.log("\nResults:");
+  console.log(`Sum:     ${total}`);
+  console.log(`Average: ${average}`);
+  console.log(`Maximum: ${highest}`);
+  console.log(`Minimum: ${lowest}`);
+}
+
+statSummary();

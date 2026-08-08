@@ -55,3 +55,55 @@
 // =============================================================================
 
 
+const prompt = require("prompt-sync")();
+
+function printFibonacciTerms(n) {
+  if (n <= 0) {
+    console.log("Error: N must be a positive integer.");
+    return;
+  }
+
+  const sequence = [];
+  let a = 0;
+  let b = 1;
+  for (let i = 0; i < n; i++) {
+    sequence.push(a);
+    [a, b] = [b, a + b];
+  }
+
+  console.log("Fibonacci sequence:", sequence.join(" "));
+}
+
+function isFibonacciNumber(number) {
+  let a = 0;
+  let b = 1;
+  if (number === a) {
+    return true;
+  }
+  while (b < number) {
+    [a, b] = [b, a + b];
+  }
+  return b === number;
+}
+
+function checkNumber() {
+  const number = parseInt(prompt("Enter a number to check: "));
+  if (isFibonacciNumber(number)) {
+    console.log(`${number} is a Fibonacci number.`);
+  } else {
+    console.log(`${number} is NOT a Fibonacci number.`);
+  }
+}
+
+function main() {
+  // PART A
+  const n = parseInt(prompt("How many terms? "));
+  printFibonacciTerms(n);
+
+  console.log();
+
+  // PART B
+  checkNumber();
+}
+
+main();

@@ -60,3 +60,39 @@
 // =============================================================================
 
 
+const prompt = require("prompt-sync")();
+
+function printSingleTable(number) {
+  console.log(`Multiplication Table for ${number}:`);
+  for (let i = 1; i <= 12; i++) {
+    console.log(`${number} x ${i} = ${number * i}`);
+  }
+}
+
+function printTablesUpToN(n) {
+  if (n <= 0) {
+    console.log("Error: N must be a positive integer.");
+    return;
+  }
+
+  for (let number = 1; number <= n; number++) {
+    printSingleTable(number);
+    if (number !== n) {
+      console.log("---");
+    }
+  }
+}
+
+function main() {
+  // PART A - Single Table
+  const number = parseInt(prompt("Enter a number: "));
+  printSingleTable(number);
+
+  console.log();
+
+  // PART B - Tables from 1 to N
+  const n = parseInt(prompt("Enter a number N: "));
+  printTablesUpToN(n);
+}
+
+main();

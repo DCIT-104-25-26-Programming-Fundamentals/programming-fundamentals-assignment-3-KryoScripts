@@ -82,3 +82,75 @@
 // =============================================================================
 
 
+const prompt = require("prompt-sync")();
+
+const tasks = [];
+
+function addTask() {
+  const task = prompt("Enter task: ");
+  tasks.push(task);
+  console.log(`Task added: "${task}"`);
+}
+
+function viewTasks() {
+  if (tasks.length === 0) {
+    console.log("Your to-do list is empty.");
+    return;
+  }
+
+  console.log("Your Tasks:");
+  tasks.forEach((task, index) => {
+    console.log(`${index + 1}. ${task}`);
+  });
+}
+
+function deleteTask() {
+  viewTasks();
+  if (tasks.length === 0) {
+    return;
+  }
+
+  const choice = parseInt(prompt("Enter task number to delete: "));
+
+  if (choice < 1 || choice > tasks.length) {
+    console.log("Error: Invalid task number.");
+    return;
+  }
+
+  const removed = tasks.splice(choice - 1, 1)[0];
+  console.log(`Task "${removed}" has been removed.`);
+}
+
+function showMenu() {
+  console.log("=".repeat(27));
+  console.log("     TO-DO LIST MENU");
+  console.log("=".repeat(27));
+  console.log("1. Add task");
+  console.log("2. View tasks");
+  console.log("3. Delete task");
+  console.log("4. Quit");
+}
+
+function main() {
+  while (true) {
+    showMenu();
+    const choice = prompt("Enter your choice (1-4): ");
+
+    if (choice === "1") {
+      addTask();
+    } else if (choice === "2") {
+      viewTasks();
+    } else if (choice === "3") {
+      deleteTask();
+    } else if (choice === "4") {
+      console.log("Goodbye!");
+      break;
+    } else {
+      console.log("Error: Please enter a number between 1 and 4.");
+    }
+
+    console.log();
+  }
+}
+
+main();

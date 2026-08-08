@@ -85,3 +85,106 @@
 // =============================================================================
 
 
+const prompt = require("prompt-sync")();
+
+const students = [];
+
+function addStudent() {
+  const name = prompt("Student name: ");
+  const id = parseInt(prompt("Student ID: "));
+  const numScores = parseInt(prompt("How many scores? "));
+
+  const scores = [];
+  for (let i = 0; i < numScores; i++) {
+    const score = parseInt(prompt(`Enter score ${i + 1}: `));
+    scores.push(score);
+  }
+
+  const student = { name, id, scores };
+  students.push(student);
+  console.log(`Student "${name}" added successfully.`);
+}
+
+function calculateAverage(scores) {
+  let total = 0;
+  for (const score of scores) {
+    total += score;
+  }
+  return Math.round((total / scores.length) * 100) / 100;
+}
+
+function displayAllStudents() {
+  if (students.length === 0) {
+    console.log("No students have been added yet.");
+    return;
+  }
+
+  console.log("-".repeat(50));
+  console.log(
+    "Name".padEnd(20) +
+      "ID".padEnd(12) +
+      "Scores".padEnd(15) +
+      "Average".padEnd(10)
+  );
+  console.log("-".repeat(50));
+
+  for (const student of students) {
+    const scoresStr = student.scores.join(", ");
+    const average = calculateAverage(student.scores);
+    console.log(
+      student.name.padEnd(20) +
+        String(student.id).padEnd(12) +
+        scoresStr.padEnd(15) +
+        String(average).padEnd(10)
+    );
+  }
+  console.log("-".repeat(50));
+}
+
+function calculateStudentAverage() {
+  const studentId = parseInt(prompt("Enter student ID: "));
+
+  for (const student of students) {
+    if (student.id === studentId) {
+      const average = calculateAverage(student.scores);
+      console.log(`${student.name}'s average score: ${average}`);
+      return;
+    }
+  }
+
+  console.log("Error: Student ID not found.");
+}
+
+function showMenu() {
+  console.log("=".repeat(35));
+  console.log("   STUDENT RECORD SYSTEM MENU");
+  console.log("=".repeat(35));
+  console.log("1. Add student");
+  console.log("2. Display all students");
+  console.log("3. Calculate average score");
+  console.log("4. Quit");
+}
+
+function main() {
+  while (true) {
+    showMenu();
+    const choice = prompt("Enter your choice (1-4): ");
+
+    if (choice === "1") {
+      addStudent();
+    } else if (choice === "2") {
+      displayAllStudents();
+    } else if (choice === "3") {
+      calculateStudentAverage();
+    } else if (choice === "4") {
+      console.log("Goodbye!");
+      break;
+    } else {
+      console.log("Error: Please enter a number between 1 and 4.");
+    }
+
+    console.log();
+  }
+}
+
+main();
